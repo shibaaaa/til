@@ -7,6 +7,8 @@ RedshiftはPostgreSQLベースだが、UNIXTIMEの取り扱いはポスグレと
 
 ### UNIXTIME → TIMESTAMP
 
+秒数まで含んでいる場合
+
 ```sql
 TIMESTAMP 'epoch' + 1548295768 * INTERVAL '1 second'
 ```
