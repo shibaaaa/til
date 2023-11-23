@@ -42,4 +42,21 @@ User.where(created_at: Time.current).merge(User.sample_or_condition).to_sql
 
 ほとんどの場合はこちらのmergeを使うケースのSQLを想定していることが多いと思うので、orメソッドの呼び出しを他の絞り込みメソッドと同時に呼び出す際には気を付ける。
 
+## 他の対応
+
+scope内でmegeを呼び出すようにする。
+
+```rb
+class User < ApplicationRecord
+  scope :sample_or_condition, -> {
+    merge(`User.where(email: 'hoge@example.com').or(User.where(name: 'fuga')))
+  }
+end
+```
+
+```io
+User.where(created_at: Time.current).sample_or_condition.to_sql
+=> "SELECT \"users\".* FROM \"users\" WHERE \"users\".\"created_at\" = '2023-11-23 02:07:35.313893' AND (\"users\".\"email\" = 'hoge@example.com' OR \"users\".\"name\" = 'fuga')"
+```
+
 
