@@ -49,7 +49,7 @@ scope内でmegeを呼び出すようにする。
 ```rb
 class User < ApplicationRecord
   scope :sample_or_condition, -> {
-    merge(`User.where(email: 'hoge@example.com').or(User.where(name: 'fuga')))
+    merge(User.where(email: 'hoge@example.com').or(User.where(name: 'fuga')))
   }
 end
 ```
