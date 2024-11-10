@@ -62,9 +62,10 @@ def mached_hash_ver(hoges_1, hoges_2)
   matched_arry = []
   hoges_2.each do |hoge|
     hoge_dup.each do |h|
-      if h.id == h.id && !matched_hoge[h.id]
+      if h.id == h.id && !matched_hoge.key?(h.id)
         matched_hoge[h.id] = hoge
         matched_arry << h
+        break
       end
     end
   end
@@ -73,8 +74,8 @@ def mached_hash_ver(hoges_1, hoges_2)
 end
 
 Benchmark.bm do |x|
-  x.report('delete_at使う') { delete_at_ver }
   x.report('hashでマッチを管理') { mached_hash_ver }
+  x.report('delete_at使う') { delete_at_ver }
 end
 ```
 
@@ -83,9 +84,9 @@ end
 ```sh
 %ruby maching_benchmark.rb
        user     system      total        real
-delete_at使う  1.526164   0.002770   1.528934 (  1.529047)
-hashでマッチを管理  2.981097   0.005135   2.986232 (  2.986266)
-ruby maching_benchmark.rb  4.56s user 0.04s system 98% cpu 4.687 total
+delete_at使う  1.523853   0.003328   1.527181 (  1.528862)
+hashでマッチを管理  3.008646   0.010394   3.019040 (  3.053027)
+ruby maching_benchmark.rb  4.58s user 0.05s system 97% cpu 4.733 total
 ```
 
 delete_atメソッドで要素を削除する方が速かった。
