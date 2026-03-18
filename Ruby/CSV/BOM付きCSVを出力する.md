@@ -31,7 +31,7 @@ end
 
 # Railsのコントローラでダウンロードに使う場合
 
-send_date csv_with_bom, file_name: with_bom.csv, type: :csv
+send_date csv_with_bom, file_name: 'with_bom.csv', type: :csv
 ```
 
 
